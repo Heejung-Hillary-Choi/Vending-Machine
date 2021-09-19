@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vending Machine</title>
+    <style>
+        td{padding-top: 10px; padding-bottom: 10px; width: 150px; text-align: center};
+    </style>
+    <script>
+        var nowMoneyValue = 0;
+        function f1() { // 1000원 더 -> nowMoney text에 +
+            nowMoneyValue +=1000;
+            document.getElementById("nowMoney").value= nowMoneyValue;
+        }
+        function f2() { // 500원 더 
+            nowMoneyValue +=500;
+            document.getElementById("nowMoney").value= nowMoneyValue;
+        }
+        function f3() { // 100원 더 
+            nowMoneyValue +=100;
+            document.getElementById("nowMoney").value= nowMoneyValue;
+        }
+        function f4() { // 잔돈반환 -> 잔돈개수 표시, nowMoney=0
+            f5();
+            nowMoneyValue=0;
+            document.getElementById("nowMoney").value= nowMoneyValue;
+            setTimeout("f10()",500); //잔돈 개수가 나온 후에 alert가 뜨게 하려고.
+        }
+        function f5() { // 잔돈개수 -> 잔돈반환 누르면 nowMoney /500, /100
+            var out500Value = parseInt(nowMoneyValue/500) ;
+            document.getElementById("out500").value= out500Value;
+            var out100Value = parseInt(nowMoneyValue%500/100) ;
+            document.getElementById("out100").value= out100Value;
+        }
+
+        //nowMoney < cost 이면 alert
+
+        function f6() { // 나온 음료 사이다 -> 선택하면 nowMoney-, 사진추가
+            if(nowMoneyValue>=600){
+                nowMoneyValue -=600;
+                document.getElementById("nowMoney").value= nowMoneyValue;
+                document.getElementById("getYourDrinkHere").innerHTML+='<img src="사이다.jpg" height="150">';
+            } else {
+                alert('금액이 모자랍니다!');
+            }
+        }
+        function f7() { // 나온 음료 콜라 
+            if(nowMoneyValue>=700){
+                nowMoneyValue -=700;
+                document.getElementById("nowMoney").value= nowMoneyValue;
+                document.getElementById("getYourDrinkHere").innerHTML+='<img src="콜라.jpg" height="150">';
+            } else {
+                alert('금액이 모자랍니다!');
+            }
+        }
+        function f8() { // 나온 음료 환타
+            if(nowMoneyValue>=800){
+                nowMoneyValue -=800;
+                document.getElementById("nowMoney").value= nowMoneyValue;
+                document.getElementById("getYourDrinkHere").innerHTML+='<img src="환타.jpg" height="150">';
+            } else {
+                alert('금액이 모자랍니다!');
+            }
+        }
+        function f9() { // 나온 음료 커피
+            if(nowMoneyValue>=300){
+                nowMoneyValue -=300;
+                document.getElementById("nowMoney").value= nowMoneyValue;
+                document.getElementById("getYourDrinkHere").innerHTML+='<img src="블랙.gif" height="150">';
+            } else {
+                alert('금액이 모자랍니다!');
+            }
+        }
+
+        function f10(){ //음료를 가져가세요. 알림 후 초기화, 다음 손님 기다리기
+            alert(' 이용해주셔서 감사합니다. \n 반환구에서 음료과 잔돈을 꼭 챙겨가세요.');
+            setTimeout("f11()",5000); //알림 후 5초 후 초기화.
+        }
+        function f11(){
+            document.getElementById("getYourDrinkHere").innerHTML="음료 반환구 <br>";
+            out500Value=0; out100Value=0;
+            document.getElementById("out500").value= out500Value;
+            document.getElementById("out100").value= out100Value;
+        }
+    </script>
+</head>
+<body>
+    <table border="1">
+        <th colspan="4" height="150"><h1> ☆ 자 판 기 ★ </h1></td></th>
+        <tr><td><img src="사이다.jpg" height="150"><input type="button" id="cider" onclick="f6()" value="사이다 600원"></td>
+            <td><img src="콜라.jpg" height="150"><br><input type="button" id="coke" onclick="f7()" value="콜라 700원"></td>
+            <td><img src="환타.jpg" height="150"><br><input type="button" id="fanta" onclick="f8()" value="환타 800원"></td>
+            <td>금액투입<br><br>
+                <input type="button" id="in1000" onclick="f1()" value="1000원 더"><br>
+                <input type="button" id="in500" onclick="f2()" value="500원 더"><br>
+                <input type="button" id="in100" onclick="f3()" value="100원 더"><br><br>
+                <input type="number" id="nowMoney" value="0" style="width: 50px;" readonly>원</td></tr> <!직접 입력하지 못하게 함.>
+        <tr><td><img src="블랙.gif" height="150"><br><input type="button" id="black" onclick="f9()" value="블랙커피 300원"></td>
+            <td><img src="블랙.gif" height="150"><br><input type="button" id="black" onclick="f9()" value="블랙커피 300원"></td>
+            <td><img src="블랙.gif" height="150"><br><input type="button" id="black" onclick="f9()" value="블랙커피 300원"></td>
+            <td><input type="button" id="moneyOut" onclick="f4()" value="잔돈반환"><br></td></tr>
+        <tr><td colspan="3" height="250" id="getYourDrinkHere">
+            음료 반환구 <br></td>
+            <td>잔돈 반환구<br><br>
+                500원 <input type="number" id="out500" value="0" style="width: 30px;" disabled>개<br><br>
+                100원 <input type="number" id="out100" value="0" style="width: 30px;" disabled>개</td></tr>
+    </table>
+</body>
+</html>
